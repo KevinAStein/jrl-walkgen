@@ -1,0 +1,99 @@
+<?xml version="1.0"?>
+<!--
+
+   This file defines semantics group of joints.
+
+   It is an alternative way of specifying semantics on the robot
+   structure.
+
+   It also provides:
+   - the half-sitting robot state,
+   TODO: - add the grippers
+   TODO: - the set of interesting collision pairs
+
+  -->
+<robot name="heicub">
+  <!-- groups -->
+
+  <!-- To remove when the grippers will be added
+  <group name="r_arm">
+    <chain base_link="torso" tip_link="r_gripper"/>
+  </group>
+
+  <group name="l_arm">
+    <chain base_link="torso" tip_link="l_gripper"/>
+  </group>
+  -->
+
+  <group name="r_leg">
+    <chain base_link="base_link" tip_link="r_sole"/>
+  </group>
+
+  <group name="l_leg">
+    <chain base_link="base_link" tip_link="l_sole"/>
+  </group>
+
+  <!-- To remove when the grippers will be added
+  <group name="arms">
+    <group name="l_arm"/>
+    <group name="r_arm"/>
+  </group>
+
+  <group name="all">
+    <group name="arms"/>
+  </group>
+  -->
+
+  <!-- end effector -->
+  <!-- To remove when the grippers will be added
+  <end_effector name="r_arm" parent_link="r_gripper" group="r_arm"/>
+  <end_effector name="l_arm" parent_link="l_gripper" group="l_arm"/>
+  -->
+  <end_effector name="r_leg" parent_link="r_sole" group="r_leg"/>
+  <end_effector name="l_leg" parent_link="l_sole" group="l_leg"/>
+
+  <!-- pre-defined states -->
+  <!-- simple_humanoid pre-defined states -->
+  <group_state name="half_sitting" group="all">
+    <!--  <joint name="waist" value="0 0 0 0 0 0 " /> -->
+    <!--joint name="base_joint"    value = "0 0 0.6 0 0 0" /-->
+
+    <joint name="l_hip_pitch"   value="0" />
+    <joint name="l_hip_roll"    value="0" />
+    <joint name="l_hip_yaw"     value="0" />
+    <joint name="l_knee"        value="0" />
+    <joint name="l_ankle_pitch" value="0" />
+    <joint name="l_ankle_roll"  value="0" />
+
+    <joint name="r_hip_pitch"   value="0" />
+    <joint name="r_hip_roll"    value="0" />
+    <joint name="r_hip_yaw"     value="0" />
+    <joint name="r_knee"        value="0" />
+    <joint name="r_ankle_pitch" value="0" />
+    <joint name="r_ankle_roll"  value="0" />
+
+    <joint name="torso_pitch"   value="0." />
+    <joint name="torso_roll"    value="0." />
+    <joint name="torso_yaw"     value="0." />
+  </group_state>
+
+  <!--
+   Simple Humnaoid Specificities.
+     foot height = y axis
+     foot width  = x axis
+     foot depth  = z axis
+  -->
+  <specificities>
+    <feet>
+      <right>
+        <size height="0.10" width="0.20" depth="0.14" />
+        <anklePosition x="0.0" y="0.0" z="0.14" />
+      </right>
+      <left>
+        <size height="0.10" width="0.20" depth="0.14" />
+        <anklePosition x="0.0" y="0.0" z="0.14" />
+      </left>
+    </feet>
+  </specificities>
+
+</robot>
