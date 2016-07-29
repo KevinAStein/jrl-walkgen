@@ -45,6 +45,8 @@
 #include <jrl/walkgen/patterngeneratorinterface.hh>
 #include <jrl/walkgen/pinocchiorobot.hh>
 
+
+
 namespace PatternGeneratorJRL
 {
   namespace TestSuite

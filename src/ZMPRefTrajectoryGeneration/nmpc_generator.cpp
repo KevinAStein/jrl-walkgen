@@ -233,8 +233,8 @@ void NMPCgenerator::initNMPCgenerator(
   alpha_ = 1 ;// 1     ; // weight for CoM velocity tracking  : 0.5 * a ; 2.5
   beta_  = 1 ;// 1     ; // weight for ZMP reference tracking : 0.5 * b ; 1e+03
   gamma_ = 1e-05 ;// 1e-05 ; // weight for jerk minimization      : 0.5 * c ; 1e-04
-  SecurityMarginX_ = 0.09 ;
-  SecurityMarginY_ = 0.05 ;
+  SecurityMarginX_ = 0.02 ;
+  SecurityMarginY_ = 0.02 ;
 
   setLocalVelocityReference(local_vel_ref);
 
@@ -407,7 +407,6 @@ void NMPCgenerator::solve_qp(){
   //qpOASES::returnValue ret, error ;
   if (!isQPinitialized_)
   {
-    // force the solver to use the maximum time for computing the solution
     cput_[0] = 1000.0;
     nwsr_ = 10000 ;
     /*ret =*/ QP_->init(
@@ -421,6 +420,7 @@ void NMPCgenerator::solve_qp(){
   }
   else
   {
+    // force the solver to use the maximum time for computing the solution
     if(useLineSearch_)
     {
       cput_[0] = 0.0007;
@@ -905,14 +905,16 @@ void NMPCgenerator::buildConvexHullSystems()
   // Polygonal hulls for feasible foot placement
   ///////////////////////////////////////////////////////
 
+  
+  //TODO KEVIN feet constraints
   // RIGHT FOOT
   dummySupp_.Foot = RIGHT ;
   dummySupp_.Phase = SS ;
-  hull5_.X_vec[0] = -0.28 ; hull5_.Y_vec[0] = -0.2 ;
-  hull5_.X_vec[1] = -0.2  ; hull5_.Y_vec[1] = -0.3 ;
-  hull5_.X_vec[2] =  0.0  ; hull5_.Y_vec[2] = -0.4 ;
-  hull5_.X_vec[3] =  0.2  ; hull5_.Y_vec[3] = -0.3 ;
-  hull5_.X_vec[4] =  0.28 ; hull5_.Y_vec[4] = -0.2 ;
+  hull5_.X_vec[0] = -0.22 ; hull5_.Y_vec[0] = -0.13 ;
+  hull5_.X_vec[1] = -0.22 ; hull5_.Y_vec[1] = -0.22 ;
+  hull5_.X_vec[2] =  0.0 ; hull5_.Y_vec[2] = -0.25 ;
+  hull5_.X_vec[3] =  0.22 ; hull5_.Y_vec[3] = -0.22 ;
+  hull5_.X_vec[4] =  0.22 ; hull5_.Y_vec[4] = -0.13 ;
   RFI_->compute_linear_system( hull5_, dummySupp_ );
   for(unsigned i = 0 ; i < hull5_.A_vec.size() ; ++i)
   {
@@ -923,11 +925,11 @@ void NMPCgenerator::buildConvexHullSystems()
   // LEFT FOOT
   dummySupp_.Foot = LEFT ;
   dummySupp_.Phase = SS ;
-  hull5_.X_vec[0] = -0.28 ; hull5_.Y_vec[0] = 0.2 ;
-  hull5_.X_vec[1] = -0.2  ; hull5_.Y_vec[1] = 0.3 ;
-  hull5_.X_vec[2] =  0.0  ; hull5_.Y_vec[2] = 0.4 ;
-  hull5_.X_vec[3] =  0.2  ; hull5_.Y_vec[3] = 0.3 ;
-  hull5_.X_vec[4] =  0.28 ; hull5_.Y_vec[4] = 0.2 ;
+  hull5_.X_vec[0] = -0.25 ; hull5_.Y_vec[0] = 0.13 ;
+  hull5_.X_vec[1] = -0.22 ; hull5_.Y_vec[1] = 0.22 ;
+  hull5_.X_vec[2] =  0.0 ; hull5_.Y_vec[2] = 0.25 ;
+  hull5_.X_vec[3] =  0.22 ; hull5_.Y_vec[3] = 0.22 ;
+  hull5_.X_vec[4] =  0.22 ; hull5_.Y_vec[4] = 0.13 ;
   RFI_->compute_linear_system( hull5_, dummySupp_ );
   for(unsigned i = 0 ; i < hull5_.A_vec.size() ; ++i)
   {
@@ -1013,6 +1015,8 @@ void NMPCgenerator::initializeCoPConstraint()
   return ;
 }
 
+
+//TODO Kevin cop const.
 void NMPCgenerator::updateCoPConstraint()
 {
   // update the part PzuV depending on Pzu
@@ -1047,6 +1051,7 @@ void NMPCgenerator::updateCoPConstraint()
     }
     else if(currentSupport_.Phase==SS && i==0 && time_+T_ > currentSupport_.TimeLimit)
     {
+
       double x1 (currentLeftFootAbsolutePosition_ .x);
       double y1 (currentLeftFootAbsolutePosition_ .y);
       double x2 (currentRightFootAbsolutePosition_.x);
@@ -1057,7 +1062,9 @@ void NMPCgenerator::updateCoPConstraint()
       rotMat_(1,0)=-sin(angle) ; rotMat_(1,1)= cos(angle) ;
 
       double l = 0.04;
-      double L = sqrt((x2-x1)*(x2-x1)+(y2-y1)*(y2-y1)) ;
+      //FIXME seems to be broken replace by only using x_dist of feet, also alter y direction
+      double L = sqrt((x2-x1)*(x2-x1)+(y2-y1)*(y2-y1));
+      
 
       hull4_.X_vec[0] = - L*0.5 ; hull4_.Y_vec[0] = - l*0.5 ;
       hull4_.X_vec[1] = - L*0.5 ; hull4_.Y_vec[1] = + l*0.5 ;

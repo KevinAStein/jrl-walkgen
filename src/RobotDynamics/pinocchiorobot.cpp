@@ -87,48 +87,48 @@ PinocchioRobot::~PinocchioRobot()
 }
 
 bool PinocchioRobot::checkModel(se3::Model * robotModel)
-{
-  if(!robotModel->existBodyName("r_ankle"))
-  {
-    m_boolModel=false;
-    const std::string exception_message ("r_ankle is not a valid body name");
-    throw std::invalid_argument(exception_message);
-    return false ;
-  }
-  if(!robotModel->existBodyName("l_ankle"))
-  {
-    m_boolModel=false;
-    const std::string exception_message ("l_ankle is not a valid body name");
-    throw std::invalid_argument(exception_message);
-    return false ;
-  }
-  if(!robotModel->existBodyName("BODY"))
-  {
-    m_boolModel=false;
-    const std::string exception_message ("BODY is not a valid body name");
-    throw std::invalid_argument(exception_message);
-    return false ;
-  }
-  if(!robotModel->existBodyName("torso"))
-  {
-    m_boolModel=false;
-    const std::string exception_message ("torso is not a valid body name");
-    throw std::invalid_argument(exception_message);
-    return false ;
-  }
-  if(!robotModel->existBodyName("r_wrist"))
-  {
-    m_boolModel=false;
-    const std::string exception_message ("r_wrist is not a valid body name");
-    throw std::invalid_argument(exception_message);
-    return false ;
-  }
-  if(!robotModel->existBodyName("l_wrist"))
-  {
-    const std::string exception_message ("l_wrist is not a valid body name");
-    throw std::invalid_argument(exception_message);
-    return false ;
-  }
+{ 
+//   if(!robotModel->existBodyName("r_sole"))
+//   {
+//     m_boolModel=false;
+//     const std::string exception_message ("r_sole is not a valid body name");
+//     throw std::invalid_argument(exception_message);
+//     return false ;
+//   }
+//   if(!robotModel->existBodyName("l_sole"))
+//   {
+//     m_boolModel=false;
+//     const std::string exception_message ("l_sole is not a valid body name");
+//     throw std::invalid_argument(exception_message);
+//     return false ;
+//   }
+//   if(!robotModel->existBodyName("root_link"))
+//   {
+//     m_boolModel=false;
+//     const std::string exception_message ("root_link is not a valid body name");
+//     throw std::invalid_argument(exception_message);
+//     return false ;
+//   }
+//   if(!robotModel->existBodyName("chest"))
+//   {
+//     m_boolModel=false;
+//     const std::string exception_message ("chest is not a valid body name");
+//     throw std::invalid_argument(exception_message);
+//     return false ;
+//   }
+//   if(!robotModel->existBodyName("r_wrist"))
+//   {
+//     m_boolModel=false;
+//     const std::string exception_message ("r_wrist is not a valid body name");
+//     throw std::invalid_argument(exception_message);
+//     return false ;
+//   }
+//   if(!robotModel->existBodyName("l_wrist"))
+//   {
+//     const std::string exception_message ("l_wrist is not a valid body name");
+//     throw std::invalid_argument(exception_message);
+//     return false ;
+//   }
   return true ;
 }
 
@@ -138,18 +138,16 @@ bool PinocchioRobot::initializeRobotModelAndData(se3::Model * robotModel,
   m_boolModel=checkModel(robotModel);
   if(!m_boolModel)
     return false ;
-
   // initialize the model
   ///////////////////////
   m_robotModel = robotModel;
 
-  // initialize the short cut for the joint ids
-  m_chest = m_robotModel->getBodyId("torso");
-  m_waist = m_robotModel->getBodyId("BODY");
-  m_leftFoot.associatedAnkle  = m_robotModel->getBodyId("l_ankle");
-  m_rightFoot.associatedAnkle = m_robotModel->getBodyId("r_ankle");
-  m_leftWrist  = m_robotModel->getBodyId("l_wrist");
-  m_rightWrist = m_robotModel->getBodyId("r_wrist");
+  m_chest = m_robotModel->getBodyId("root_link");
+  m_waist = m_robotModel->getBodyId("root_link");
+  m_leftFoot.associatedAnkle  = m_robotModel->getBodyId("l_sole");
+  m_rightFoot.associatedAnkle = m_robotModel->getBodyId("r_sole");
+//   m_leftWrist  = m_robotModel->getBodyId("l_wrist");
+//   m_rightWrist = m_robotModel->getBodyId("r_wrist");
   DetectAutomaticallyShoulders();
 
   // intialize the "initial pose" (q=[0]) data
@@ -217,10 +215,10 @@ bool PinocchioRobot::testInverseKinematics()
       jointsBetween(m_waist,m_leftFoot.associatedAnkle);
   std::vector<se3::JointIndex> rightLeg =
       jointsBetween(m_waist,m_rightFoot.associatedAnkle);
-  std::vector<se3::JointIndex> leftArm =
-      jointsBetween(m_chest,m_leftWrist);
-  std::vector<se3::JointIndex> rightArm =
-      jointsBetween(m_chest,m_rightWrist);
+//   std::vector<se3::JointIndex> leftArm =
+//       jointsBetween(m_chest,m_leftWrist);
+//   std::vector<se3::JointIndex> rightArm =
+//       jointsBetween(m_chest,m_rightWrist);
 
   std::vector<std::string> leftLegJointName,rightLegJointName,
       leftArmJointName,rightArmJointName;
@@ -249,18 +247,18 @@ bool PinocchioRobot::testInverseKinematics()
                                             m_robotModel->joints[rightLeg[i]]);
     m_isLegInverseKinematic &= (shortName == rightLegJointName[i]);
   }
-  for (unsigned  i=0 ; i<leftArmJointName.size() ; ++i)
-  {
-    std::string shortName = boost::apply_visitor(Joint_shortname(),
-                                            m_robotModel->joints[leftArm[i]]);
-    m_isArmInverseKinematic &= (shortName == leftArmJointName[i]);
-  }
-  for (unsigned  i=0 ; i<rightArmJointName.size() ; ++i)
-  {
-    std::string shortName = boost::apply_visitor(Joint_shortname(),
-                                            m_robotModel->joints[rightArm[i]]);
-    m_isArmInverseKinematic &= (shortName == rightArmJointName[i]);
-  }
+//   for (unsigned  i=0 ; i<leftArmJointName.size() ; ++i)
+//   {
+//     std::string shortName = boost::apply_visitor(Joint_shortname(),
+//                                             m_robotModel->joints[leftArm[i]]);
+//     m_isArmInverseKinematic &= (shortName == leftArmJointName[i]);
+//   }
+//   for (unsigned  i=0 ; i<rightArmJointName.size() ; ++i)
+//   {
+//     std::string shortName = boost::apply_visitor(Joint_shortname(),
+//                                             m_robotModel->joints[rightArm[i]]);
+//     m_isArmInverseKinematic &= (shortName == rightArmJointName[i]);
+//   }
 
   return m_isLegInverseKinematic & m_isArmInverseKinematic;
 }

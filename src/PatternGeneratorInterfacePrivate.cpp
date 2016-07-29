@@ -1193,14 +1193,14 @@ namespace PatternGeneratorJRL {
     {
       m_InternalClock = 0.0;
       initOnlineHerdt();
-      printf("Online Herdt\n");
+    //  printf("Online Herdt\n");
       //ODEBUG4("InitOnLine","DebugHerdt.txt");
     }
     else if (aCmd==":NaveauOnline")
     {
       m_InternalClock = 0.0;
       initOnlineNaveau();
-      printf("Online Naveau\n");
+    //  printf("Online Naveau\n");
       //ODEBUG4("InitOnLine","DebugNaveau.txt");
     }
     else if(aCmd==":feedBackControl")
@@ -1277,7 +1277,7 @@ namespace PatternGeneratorJRL {
       m_AlgorithmforZMPCOM = ZMPCOM_NAVEAU_2015;
       m_GlobalStrategyManager = m_CoMAndFootOnlyStrategy;
       m_CoMAndFootOnlyStrategy->SetTheLimitOfTheBuffer(0);
-      cout << "Naveau" << endl;
+   //   cout << "Naveau" << endl;
     }
   }
 

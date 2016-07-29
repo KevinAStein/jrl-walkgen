@@ -66,7 +66,7 @@ ZMPRefTrajectoryGeneration(SPM),OFTG_(NULL),dynamicFilter_(NULL),CurrentIndexUpp
   SQP_N_ = 16 ;
   SQP_nf_ = 2 ;
   m_SamplingPeriod = 0.005 ;
-  outputPreviewDuration_ = m_SamplingPeriod ;
+  outputPreviewDuration_ = 0.02 ;
   //outputPreviewDuration_ = SQP_T_ ;
 
   // Generator Management
@@ -76,11 +76,11 @@ ZMPRefTrajectoryGeneration(SPM),OFTG_(NULL),dynamicFilter_(NULL),CurrentIndexUpp
   NbSampleOutput_ = (int)round(outputPreviewDuration_/m_SamplingPeriod) + 1 ;
   NbSampleControl_ = (int)round(SQP_T_/m_SamplingPeriod) ;
   NbSampleInterpolation_ = (int)round(SQP_T_/InterpolationPeriod_) ;
-  StepPeriod_ = 0.8 ;
-  SSPeriod_ = 0.7 ;
-  DSPeriod_ = 0.1 ;
+  StepPeriod_ = 1.5 ;
+  SSPeriod_ = 1.0 ;
+  DSPeriod_ = 0.5 ;
   FeetDistance_ = 0.2 ;
-  CoMHeight_ = 0.814 ;
+  CoMHeight_ = 0.465 ;
   UpperTimeLimitToUpdate_ = 0.0 ;
 
   // perturbation management
@@ -88,7 +88,7 @@ ZMPRefTrajectoryGeneration(SPM),OFTG_(NULL),dynamicFilter_(NULL),CurrentIndexUpp
   RobotMass_ = PR_->mass() ;
 
   // interpolation management
-  StepHeight_ = 0.05 ;
+  StepHeight_ = 0.04 ;
   CurrentIndex_ = 1 ;
 
   // Initialize  the 2D LIPM

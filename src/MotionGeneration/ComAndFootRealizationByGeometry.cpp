@@ -414,14 +414,20 @@ bool ComAndFootRealizationByGeometry::
   // coct    -st    -soct
   // cost     ct    -sost
   // so        0    co
-  assert((normalizedRotation(2,1) == 0) &&
-         "Error in the walk pattern generator initialization:" &&
-         " Initial foot position is not flat");
+//   assert((normalizedRotation(2,1) == 0) &&
+//          "Error in the walk pattern generator initialization:" &&
+//          " Initial foot position is not flat");
 
   InitFootPosition.omega =
       atan2(normalizedRotation(2,0),normalizedRotation(2,2))*180/M_PI;
   InitFootPosition.theta =
       atan2(-normalizedRotation(0,1),normalizedRotation(1,1))*180/M_PI;
+  
+//       std::cout << InitFootPosition.omega << endl;
+//       std::cout << InitFootPosition.theta << endl;
+//       std::cout << normalizedRotation(2,1) << endl;
+      
+      
   return true;
 }
 

@@ -41,7 +41,7 @@ FootHalfSize::FootHalfSize()
   m_ConstraintsOnX = 0.01;
 
   // Variation around Y < 2 cm by default.
-  m_ConstraintsOnY = 0.02;
+  m_ConstraintsOnY = 0.01;
 }
 
 FootHalfSize::~FootHalfSize()

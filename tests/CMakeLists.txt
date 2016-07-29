@@ -12,7 +12,6 @@
 # General Lesser Public License for more details.  You should have
 # received a copy of the GNU Lesser General Public License along with
 # jrl-walkgen. If not, see <http://www.gnu.org/licenses/>.
-
 INCLUDE(CTest)
 
 # Import jrl-mal flags.
@@ -27,6 +26,13 @@ CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/private_cmake/config_private.hh.cmake
 
 ADD_REQUIRED_DEPENDENCY("simple_humanoid_description >= 1.0.1")
 ADD_OPTIONAL_DEPENDENCY("hrp2_14_description >= 1.0.2")
+ADD_REQUIRED_DEPENDENCY("jrl-mal >= 1.9.0")
+ADD_REQUIRED_DEPENDENCY("pinocchio >=  1.1.0")
+
+#FIND_PACKAGE(YARP REQUIRED)
+#INCLUDE_DIRECTORIES(SYSTEM ${YARP_INCLUDE_DIRS})
+
+
 
 #################
 ## Generic test #
@@ -136,6 +142,31 @@ ENDMACRO(ADD_JRL_WALKGEN_TEST)
 
 #ADD_JRL_WALKGEN_TEST(TestHerdt2010OnLine TestHerdt2010.cpp)
 #ADD_JRL_WALKGEN_TEST(TestHerdt2010EmergencyStop TestHerdt2010.cpp)
+#  CONFIG_FILES_CMAKE(${test_name}TestFGPI.datref)
+
+ADD_EXECUTABLE(walkgentest
+    walkgentest.cpp
+#    TestObject.cpp
+    CommonTools.cpp
+    ClockCPUTime.cpp
+    ../src/portability/gettimeofday.cc
+  )
+
+MESSAGE(STATUS "Prepare test : " "walgentest")
+SET(urdfpath
+  ${SIMPLE_HUMANOID_DESCRIPTION_PKGDATAROOTDIR}/simple_humanoid_description/urdf/simple_humanoid.urdf
+)
+SET(srdfpath
+  ${SIMPLE_HUMANOID_DESCRIPTION_PKGDATAROOTDIR}/simple_humanoid_description/srdf/simple_humanoid.srdf
+)
+
+LIST(APPEND LOGGING_WATCHED_VARIABLES urdfpath srdfpath)
+
+TARGET_LINK_LIBRARIES(walkgentest ${PROJECT_NAME}
+                                 # ${YARP_LIBRARIES}
+)
+PKG_CONFIG_USE_DEPENDENCY(walkgentest jrl-mal)
+
 
 ############################
 ## Test Inverse Kinematics #

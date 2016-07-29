@@ -308,7 +308,7 @@ QPProblem::solve( solver_e Solver, solution_t & Result, const tests_e & tests )
   case LSSOL:
 #ifdef LSSOL_FOUND
 
-    sendOption("Print Level = 0");
+    sendOption("Print Level = 1");
 
     sendOption("Problem Type = QP2");
 

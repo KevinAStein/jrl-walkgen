@@ -51,16 +51,14 @@ namespace PatternGeneratorJRL {
 
     void CommonInitialization(PatternGeneratorInterface &aPGI)
     {
-      const unsigned int nbMethod = 13 ;
+      const unsigned int nbMethod = 11 ;
       const char lBuffer[nbMethod][256] =
       {
-        ":comheight 0.8078",
+        ":comheight 0.465497",
         ":samplingperiod 0.005",
         ":previewcontroltime 1.6",
         ":omega 0.0",
-        ":stepheight 0.07",
-        ":singlesupporttime 0.78",
-        ":doublesupporttime 0.02",
+        ":stepheight 0.04",
         ":armparameters 0.5",
         ":LimitsFeasibility 0.0",
         ":ZMPShiftParameters 0.015 0.015 0.015 0.015",
@@ -87,28 +85,28 @@ namespace PatternGeneratorJRL {
 				 InitLeftFootAbsPos,
 				 InitRightFootAbsPos);
 
-      cout << "Starting COM Position: "
-	   << lStartingCOMPosition.x[0] << " "
-	   << lStartingCOMPosition.y[0] << " "
-	   << lStartingCOMPosition.z[0] << endl;
-
-      cout << "Starting Left Foot Pos: "
-	   << InitLeftFootAbsPos.x << " "
-	   << InitLeftFootAbsPos.y << " "
-	   << InitLeftFootAbsPos.z << " "
-	   << InitLeftFootAbsPos.theta<< " "
-	   << InitLeftFootAbsPos.omega << " "
-	   << InitLeftFootAbsPos.omega2 << " "
-	   << endl;
-
-      cout << "Starting Right Foot Pos: "
-	   << InitRightFootAbsPos.x << " "
-	   << InitRightFootAbsPos.y << " "
-	   << InitRightFootAbsPos.z << " "
-	   << InitRightFootAbsPos.theta<< " "
-	   << InitRightFootAbsPos.omega << " "
-	   << InitRightFootAbsPos.omega2 << " "
-	   << endl;
+//       cout << "Starting COM Position: "
+// 	   << lStartingCOMPosition.x[0] << " "
+// 	   << lStartingCOMPosition.y[0] << " "
+// 	   << lStartingCOMPosition.z[0] << endl;
+// 
+//       cout << "Starting Left Foot Pos: "
+// 	   << InitLeftFootAbsPos.x << " "
+// 	   << InitLeftFootAbsPos.y << " "
+// 	   << InitLeftFootAbsPos.z << " "
+// 	   << InitLeftFootAbsPos.theta<< " "
+// 	   << InitLeftFootAbsPos.omega << " "
+// 	   << InitLeftFootAbsPos.omega2 << " "
+// 	   << endl;
+// 
+//       cout << "Starting Right Foot Pos: "
+// 	   << InitRightFootAbsPos.x << " "
+// 	   << InitRightFootAbsPos.y << " "
+// 	   << InitRightFootAbsPos.z << " "
+// 	   << InitRightFootAbsPos.theta<< " "
+// 	   << InitRightFootAbsPos.omega << " "
+// 	   << InitRightFootAbsPos.omega2 << " "
+// 	   << endl;
 
     }
 
@@ -119,7 +117,7 @@ namespace PatternGeneratorJRL {
             string &srdfFullPath,
             unsigned int &) // TestProfil)
     {
-      std::cout << "argc:" << argc << std::endl;
+//       std::cout << "argc:" << argc << std::endl;
       if (argc!=3)
 	{
       cerr << " This program takes 2 arguments: " << endl;
@@ -129,10 +127,10 @@ namespace PatternGeneratorJRL {
 	}
       else
 	{
-      urdfFullPath=argv[1];
-      srdfFullPath=argv[2];
-      cout << urdfFullPath << endl ;
-      cout << srdfFullPath << endl ;
+       urdfFullPath=argv[1];
+       srdfFullPath=argv[2];
+//       cout << urdfFullPath << endl ;
+//       cout << srdfFullPath << endl ;
 	}
     }
   } /* End of TestSuite namespace */

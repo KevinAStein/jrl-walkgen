@@ -35,7 +35,6 @@ _build-RELEASE/
 src/Mathematics/PolynomeFoot_backup.cpp
 src/Mathematics/PolynomeFoot_backup.hh
 tests/CMakeCache.txt
-tests/CMakeFiles/
 tests/CPackConfig.cmake
 tests/CPackSourceConfig.cmake
 tests/CTestTestfile.cmake
@@ -44,7 +43,6 @@ tests/Makefile
 tests/TestHerdt2010DynamicFilter.cpp
 tests/TestHerdt2010_backup.cpp
 tests/TestMorisawaStairs.cpp
-tests/cmake/
 tests/cmake_install.cmake
 tests/config.h
 tests/config.log
@@ -61,7 +59,6 @@ tests/tests/
 *.orig
 *.cbp
 *.user
-*.cmake
 *dirty
 *.eps
 *.png
@@ -72,7 +69,6 @@ tests/tests/
 *.py
 *.pyc
 *#*
-tests/*.txt
 tests/*.csv
 _build-DEBUG-QTCREATOR/*
 _build-RELEASE-QT/*
